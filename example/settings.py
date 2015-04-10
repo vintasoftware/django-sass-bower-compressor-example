@@ -132,6 +132,6 @@ COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'sample_app.compressor_filters.PatchedSCSSCompiler'),
 )
 
-COMPRESS_CSS_FILTERS = [
+COMPRESS_CSS_FILTERS = (
     'sample_app.compressor_filters.CustomCssAbsoluteFilter',
-]
+)
