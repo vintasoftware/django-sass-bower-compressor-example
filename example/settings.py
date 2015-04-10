@@ -135,3 +135,10 @@ COMPRESS_PRECOMPILERS = (
 COMPRESS_CSS_FILTERS = [
     'sample_app.compressor_filters.CustomCssAbsoluteFilter',
 ]
+
+
+# Heroku settings
+
+ALLOWED_HOSTS = ['*']
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
