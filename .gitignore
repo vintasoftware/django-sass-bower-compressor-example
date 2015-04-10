@@ -2,15 +2,8 @@
 .DS_Store
 .sass-cache
 /db.sqlite3
-/.coverage
 /venv
-/components/
-!/components/.keep
-/coverage_html/
 /staticfiles/
 /media/
-celerybeat-schedule
-*.css.map
-/tmp_email/*
-!/tmp_email/.keep
 /node_modules/
+/components/
