@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
+from decouple import config, Csv
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
@@ -20,12 +22,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '$fifkf%7f34m=4v*5pgmv+@^+7^#+#x^^$9yy&mk=8kd_-g#q*'
+SECRET_KEY = config('SECRET_KEY', default='$fifkf%7f34m=4v*5pgmv+@^+7^#+#x^^$9yy&mk=8kd_-g#q*')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+DEBUG = config('DEBUG', default=True, cast=bool)
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
 
     'djangobower',
     'compressor',
@@ -139,6 +140,21 @@ COMPRESS_CSS_FILTERS = (
 
 # Heroku settings
 
-ALLOWED_HOSTS = ['*']
+if not DEBUG:
+    ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+    AWS_S3_CUSTOM_DOMAIN = '{0}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
+
+    STATICFILES_STORAGE = 'sample_app.custom_storages.StaticCachedS3BotoStorage'
+    DEFAULT_FILE_STORAGE = 'sample_app.custom_storages.MediaS3BotoStorage'
+
+    COMPRESS_STORAGE = STATICFILES_STORAGE
+
+    STATIC_URL = 'https://{0}/static/'.format(AWS_S3_CUSTOM_DOMAIN)
+    MEDIA_URL = 'https://{0}/media/'.format(AWS_S3_CUSTOM_DOMAIN)
+
+    COMPRESS_URL = STATIC_URL
