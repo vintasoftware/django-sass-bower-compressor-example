@@ -5,7 +5,7 @@ Example Django 1.8 project using django-libsass, django-bower and django-compres
 ```sh
 # first activate a virtualenv, then:
 pip install -r requirements.txt 
-python manage.py bower_install  # with underline!
+python manage.py bower install
 python manage.py runserver
 ```
 
