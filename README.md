@@ -21,4 +21,5 @@ heroku config:set DEBUG=False \
                   AWS_SECRET_ACCESS_KEY=FILL-HERE \
                   AWS_STORAGE_BUCKET_NAME=FILL-HERE \
                   SECRET_KEY=FILL-HERE
+git push heroku with-s3:master
 ```
