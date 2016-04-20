@@ -45,7 +45,7 @@ INSTALLED_APPS = (
 )
 
 BOWER_INSTALLED_APPS = (
-    'bootstrap-sass-official#3.3.1',
+    'bootstrap-sass-official#3.3.6',
 )
 
 BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'components')
